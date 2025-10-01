@@ -6,6 +6,13 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Storefront from "./pages/Storefront";
 import ProductDetail from "./pages/ProductDetail";
+import Auth from "./pages/Auth";
+import Pricing from "./pages/Pricing";
+import Discover from "./pages/Discover";
+import StartSelling from "./pages/StartSelling";
+import Admin from "./pages/Admin";
+import Checkout from "./pages/Checkout";
+import Community from "./pages/Community";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -18,6 +25,13 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/auth" element={<Auth />} />
+          <Route path="/pricing" element={<Pricing />} />
+          <Route path="/discover" element={<Discover />} />
+          <Route path="/community" element={<Community />} />
+          <Route path="/start-selling" element={<StartSelling />} />
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/checkout" element={<Checkout />} />
           <Route path="/:creatorSlug" element={<Storefront />} />
           <Route path="/:creatorSlug/:productId" element={<ProductDetail />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

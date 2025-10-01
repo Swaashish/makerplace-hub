@@ -74,7 +74,14 @@ const ProductDetail = () => {
                 <span className="text-4xl font-bold text-primary">${product.price}</span>
                 <span className="text-muted-foreground">one-time payment</span>
               </div>
-              <Button size="lg" className="w-full bg-gradient-to-r from-primary to-accent text-lg">
+              <Button 
+                size="lg" 
+                className="w-full bg-gradient-to-r from-primary to-accent text-lg"
+                onClick={() => {
+                  const params = new URLSearchParams({ product: productId || "" });
+                  window.location.href = `/checkout?${params.toString()}`;
+                }}
+              >
                 I want this!
               </Button>
             </Card>
