@@ -1,106 +1,76 @@
 import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Check } from "lucide-react";
+import { TrendingUp, Zap, Star } from "lucide-react";
 
 const Pricing = () => {
-  const plans = [
-    {
-      name: "Free",
-      price: "0",
-      description: "Perfect for getting started",
-      features: [
-        "Unlimited products",
-        "3.5% + $0.30 per sale",
-        "Instant payouts",
-        "Email support",
-        "Basic analytics"
-      ]
-    },
-    {
-      name: "Creator",
-      price: "10",
-      description: "For serious creators",
-      popular: true,
-      features: [
-        "Everything in Free",
-        "2.9% + $0.30 per sale",
-        "Custom domain",
-        "Priority support",
-        "Advanced analytics",
-        "Email marketing tools"
-      ]
-    },
-    {
-      name: "Pro",
-      price: "25",
-      description: "For professional teams",
-      features: [
-        "Everything in Creator",
-        "1.9% + $0.30 per sale",
-        "White-label branding",
-        "API access",
-        "Dedicated support",
-        "Custom integrations",
-        "Team collaboration"
-      ]
-    }
-  ];
-
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen overflow-x-hidden">
       <Navigation />
-      
-      <div className="container mx-auto px-4 py-24">
-        <div className="text-center mb-16">
-          <h1 className="text-4xl lg:text-5xl font-bold mb-4">
-            Simple, transparent pricing
+
+      {/* Section 1: Hero - Yellow Gradient */}
+      <section className="relative py-36 bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-500 border-b border-black overflow-hidden">
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <h1 className="text-6xl font-extrabold mb-6 text-black" style={{ fontFamily: "'Orbitron', sans-serif" }}>
+            Earn your first penny
           </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Start for free. Upgrade when you're ready. Cancel anytime.
+          <p className="text-2xl text-black mb-12">
+            Sell your first digital product and keep maximum profit.
           </p>
+          <Button size="lg" className="bg-black text-white font-bold hover:bg-black/90">
+            Start Selling
+          </Button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {plans.map((plan) => (
-            <Card key={plan.name} className={plan.popular ? "border-primary shadow-lg" : ""}>
-              {plan.popular && (
-                <div className="bg-gradient-to-r from-primary to-accent text-white text-center py-2 text-sm font-medium">
-                  Most Popular
-                </div>
-              )}
-              <CardHeader>
-                <CardTitle>{plan.name}</CardTitle>
-                <CardDescription>{plan.description}</CardDescription>
-                <div className="mt-4">
-                  <span className="text-4xl font-bold">${plan.price}</span>
-                  <span className="text-muted-foreground">/month</span>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <Button 
-                  className={plan.popular ? "w-full bg-gradient-to-r from-primary to-accent" : "w-full"}
-                  variant={plan.popular ? "default" : "outline"}
-                >
-                  {plan.price === "0" ? "Get Started" : "Upgrade Now"}
-                </Button>
-                <ul className="mt-6 space-y-3">
-                  {plan.features.map((feature) => (
-                    <li key={feature} className="flex items-start gap-3">
-                      <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-            </Card>
+        {/* Large animated gradient shapes */}
+        <div className="absolute inset-0 flex justify-around items-center pointer-events-none">
+          {[...Array(6)].map((_, i) => (
+            <div
+              key={i}
+              className="w-32 h-32 rounded-full bg-gradient-to-br from-pink-500 via-purple-500 to-indigo-500 animate-float-slow shadow-2xl"
+              style={{
+                transform: `rotate(${i * 60}deg)`,
+                animationDelay: `${i * 0.5}s`,
+              }}
+            />
           ))}
         </div>
+      </section>
 
-        <div className="mt-16 text-center text-muted-foreground">
-          <p>All plans include 14-day free trial. No credit card required.</p>
+      {/* Section 2: Split merged with 3D icons */}
+      <section className="relative py-36 grid lg:grid-cols-2 gap-12 border-b border-black">
+        {/* Left: Large 3D gradient icons */}
+        <div className="relative flex flex-col justify-center items-center space-y-12 bg-gradient-to-tr from-purple-600 via-pink-500 to-red-500 rounded-xl overflow-hidden">
+          <div className="transform rotate-12 shadow-2xl">
+            <TrendingUp className="text-white w-40 h-40 drop-shadow-2xl" />
+          </div>
+          <div className="transform -rotate-6 shadow-2xl">
+            <Zap className="text-white w-36 h-36 drop-shadow-2xl" />
+          </div>
+          <div className="transform rotate-3 shadow-2xl">
+            <Star className="text-white w-32 h-32 drop-shadow-2xl" />
+          </div>
         </div>
-      </div>
+
+        {/* Right: Explanation */}
+        <div className="px-4 flex flex-col justify-center bg-black text-white rounded-xl p-12 space-y-4">
+          <h2 className="text-4xl font-extrabold mb-4">Sell with confidence</h2>
+          <ul className="space-y-3 list-disc list-inside">
+            <li>Instant payouts</li>
+            <li>Keep most of your profit</li>
+            <li>Global reach for your digital products</li>
+            <li>Easy-to-use dashboard</li>
+            <li>Track performance with analytics</li>
+          </ul>
+        </div>
+      </section>
+
+      {/* Section 3: CTA - Pink Background */}
+      <section className="relative py-36 text-center bg-gradient-to-tr from-pink-500 via-fuchsia-500 to-purple-500">
+        <h2 className="text-5xl font-extrabold text-white mb-6">Share your work</h2>
+        <Button size="lg" className="bg-black text-white font-bold hover:bg-black/90">
+          Start Selling
+        </Button>
+      </section>
     </div>
   );
 };

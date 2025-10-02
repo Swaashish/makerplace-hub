@@ -1,16 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Search, User, LogOut, LayoutDashboard } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 
 const Navigation = () => {
   const navigate = useNavigate();
@@ -18,15 +9,23 @@ const Navigation = () => {
   const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
+    // initial session check
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
     });
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+    // auth state listener
+    const { data } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
     });
 
-    return () => subscription.unsubscribe();
+    return () => {
+      try {
+        data?.subscription?.unsubscribe();
+      } catch {
+        // ignore
+      }
+    };
   }, []);
 
   const handleSignOut = async () => {
@@ -35,78 +34,75 @@ const Navigation = () => {
       title: "Signed out",
       description: "You've been successfully signed out",
     });
+    setUser(null);
     navigate("/");
   };
 
+  const goToDashboard = () => {
+    if (user) {
+      navigate("/admin");
+    } else {
+      navigate("/auth");
+    }
+  };
+
   return (
-    <nav className="border-b border-border bg-background/80 backdrop-blur-sm sticky top-0 z-50">
-      <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-accent" />
-          <span className="text-xl font-bold">CreatorHub</span>
+    <nav className="bg-black text-white sticky top-0 z-50 shadow-md">
+      <div className="container mx-auto px-6 py-4 flex items-center justify-between font-bold">
+        {/* Left: Logo */}
+        <Link
+          to="/"
+          className="text-2xl tracking-wider uppercase"
+          style={{ fontFamily: "'Orbitron', sans-serif" }}
+        >
+          DEVLAB
         </Link>
-        
-        <div className="flex items-center gap-6">
-          <Link to="/discover" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
+
+        {/* Middle Navigation */}
+        <div className="flex items-center space-x-6 text-base">
+          <Link to="/discover" className="hover:text-pink-400 transition-colors">
             Discover
           </Link>
-          <Link to="/community" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
+
+          <span className="h-6 w-px bg-white/40" />
+
+          <Link to="/community" className="hover:text-pink-400 transition-colors">
             Community
           </Link>
-          <Link to="/pricing" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
+
+          <span className="h-6 w-px bg-white/40" />
+
+          <Link to="/pricing" className="hover:text-pink-400 transition-colors">
             Pricing
           </Link>
-          <Button variant="ghost" size="icon">
-            <Search className="w-4 h-4" />
-          </Button>
-          
+
+          <span className="h-6 w-px bg-white/40" />
+        </div>
+
+        {/* Right: Dashboard + Auth */}
+        <div className="flex items-center gap-3">
+          <button
+            onClick={goToDashboard}
+            className="px-4 py-2 rounded-lg font-semibold bg-white text-black border border-black hover:bg-stone-100 transition"
+            title={user ? "Go to dashboard" : "Login to access dashboard"}
+          >
+            Dashboard
+          </button>
+
           {user ? (
-            <>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="sm">
-                    <User className="w-4 h-4 mr-2" />
-                    Account
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem onClick={() => navigate("/admin")}>
-                    <LayoutDashboard className="w-4 h-4 mr-2" />
-                    Dashboard
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={handleSignOut}>
-                    <LogOut className="w-4 h-4 mr-2" />
-                    Sign Out
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-              <Button 
-                size="sm" 
-                className="bg-gradient-to-r from-primary to-accent"
-                onClick={() => navigate("/start-selling")}
-              >
-                Start Selling
-              </Button>
-            </>
+            <button
+              onClick={handleSignOut}
+              className="px-4 py-2 rounded-lg font-bold bg-pink-100 text-pink-600 border border-pink-300 hover:bg-pink-200 transition"
+            >
+              Sign Out
+            </button>
           ) : (
-            <>
-              <Button 
-                variant="outline" 
-                size="sm"
-                onClick={() => navigate("/auth")}
-              >
-                <User className="w-4 h-4 mr-2" />
-                Sign In
-              </Button>
-              <Button 
-                size="sm" 
-                className="bg-gradient-to-r from-primary to-accent"
-                onClick={() => navigate("/auth")}
-              >
-                Start Selling
-              </Button>
-            </>
+            <button
+              onClick={() => navigate("/auth")}
+              className="px-4 py-2 rounded-lg font-bold bg-pink-100 text-pink-600 border border-pink-300 hover:bg-pink-200 transition"
+            >
+              Login
+            </button>
           )}
         </div>
       </div>
