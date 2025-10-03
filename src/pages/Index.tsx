@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import heroImage from "@/assets/hero-marketplace.jpg";
 import { Link } from "react-router-dom";
 import React from "react";
-import { ArrowRight, Sparkles, Zap, DollarSign, TrendingUp, Star, MessageSquare } from "lucide-react";
+import { ArrowRight, Sparkles, Zap, DollarSign, TrendingUp, Star, MessageSquare, Coins, CreditCard  } from "lucide-react";
 
 
 const sellTypes1 = [
@@ -97,47 +97,61 @@ const Index = () => {
       `}</style>
 
   {/* HERO - Center Dynamic */}
-<section className="relative py-20 bg-cream-50">
+
+<section className="relative min-h-screen bg-yellow-100 flex items-center justify-center">
   <div className="container mx-auto px-4">
-    <div className="relative flex flex-col items-center justify-center">
+    <div className="relative flex flex-col items-center justify-center text-center">
 
       {/* Left floating accent */}
       <div 
-        className="absolute left-6 top-1/3 w-36 h-36 rounded-full bg-yellow-300/60 blur-3xl"
-        style={{
-          animation: "floatY 6s ease-in-out infinite"
-        }}
+        className="absolute left-10 top-1/3 w-40 h-40 rounded-full bg-yellow-300/60 blur-3xl"
+        style={{ animation: "floatY 6s ease-in-out infinite" }}
       />
 
       {/* Right floating accent */}
       <div 
-        className="absolute right-6 top-1/4 w-28 h-48 rounded-lg bg-pink-300/50 blur-3xl"
-        style={{
-          animation: "floatY 8s ease-in-out infinite"
-        }}
+        className="absolute right-10 top-1/4 w-32 h-52 rounded-lg bg-pink-300/50 blur-3xl"
+        style={{ animation: "floatY 8s ease-in-out infinite" }}
       />
 
       {/* Top spinning circle */}
       <div 
-        className="absolute top-10 left-1/2 w-72 h-72 border-4 border-gradient-to-tr from-primary to-accent rounded-full opacity-50"
-        style={{
-          animation: "spin360 25s linear infinite",
-          transformOrigin: "center"
-        }}
+        className="absolute top-10 left-1/2 w-80 h-80 border-4 border-gradient-to-tr from-yellow-400 to-yellow-600 rounded-full opacity-40"
+        style={{ animation: "spin360 25s linear infinite", transformOrigin: "center" }}
       />
 
-      {/* Hero Text */}
-      <div className="text-center max-w-5xl mx-auto px-6 py-12 relative z-10">
-        <h1 className="text-5xl md:text-6xl font-extrabold mb-4" style={{ color: "#111827" }}>
+      {/* Floating money icons (bigger + away from text) */}
+      <div 
+        className="absolute top-20 left-12 text-7xl"
+        style={{ animation: "floatY 7s ease-in-out infinite" }}
+      >
+        💰
+      </div>
+      <div 
+        className="absolute bottom-24 right-16 text-8xl"
+        style={{ animation: "floatY 9s ease-in-out infinite" }}
+      >
+        💵
+      </div>
+      <div 
+        className="absolute top-32 right-20 text-7xl"
+        style={{ animation: "floatY 11s ease-in-out infinite" }}
+      >
+        🪙
+      </div>
+
+      {/* Hero Text (centered) */}
+      <div className="text-center max-w-4xl mx-auto relative z-10">
+        <h1 className="text-5xl md:text-6xl font-extrabold mb-6 text-gray-900">
           Earn your first penny
         </h1>
-        <p className="text-xl md:text-2xl text-gray-700 mb-8">
+        <p className="text-xl md:text-2xl text-gray-700 mb-10">
           Sell your first digital product and keep maximum profit
         </p>
 
         <div className="flex items-center justify-center gap-4">
           <Link to="/start-selling">
-            <Button size="lg" className="bg-gradient-to-r from-primary to-accent text-white shadow-lg hover:-translate-y-1 transition-transform">
+            <Button size="lg" className="bg-gradient-to-r from-yellow-500 to-yellow-700 text-white shadow-lg hover:-translate-y-1 transition-transform">
               Start Selling
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
@@ -149,32 +163,20 @@ const Index = () => {
             </Button>
           </Link>
         </div>
-
-        {/* Discover small hero */}
-        <div className="mt-10 flex items-center justify-center gap-6">
-          <div className="max-w-lg text-left">
-            <h3 className="text-lg font-semibold mb-2">Discover creators & products</h3>
-            <p className="text-sm text-gray-600">Explore trending digital products and get inspired.</p>
-          </div>
-          <div className="hidden md:block w-40 h-40 rounded-xl overflow-hidden border border-black shadow-lg">
-            <img src={heroImage} alt="market" className="w-full h-full object-cover" />
-          </div>
-        </div>
       </div>
     </div>
   </div>
 
-  {/* Inline keyframes for animations */}
+  {/* Floating animation keyframes */}
   <style>
     {`
       @keyframes floatY {
         0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-20px); }
+        50% { transform: translateY(-25px); }
       }
-
       @keyframes spin360 {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
       }
     `}
   </style>
